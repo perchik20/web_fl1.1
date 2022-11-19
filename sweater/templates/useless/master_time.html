@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ Time and Master
+{% endblock %}
+
+{% block body %}
+
+    {% for el in masters %}
+        <div class="alert alert-info">
+            <a href="/signup/{{el.id}}/10:00:00/{{ current_user.get_id() }}" class="btn btn-success">10:00</a>
+            <a href="/signup/{{el.id}}/11:00:00/{{ current_user.get_id() }}" class="btn btn-success">11:00</a>
+            <a href="/signup/{{el.id}}/12:00:00/{{ current_user.get_id() }}" class="btn btn-success">12:00</a>
+            <a href="/signup/{{el.id}}/13:00:00/{{ current_user.get_id() }}" class="btn btn-success">13:00</a>
+            <a href="/signup/{{el.id}}/14:00:00/{{ current_user.get_id() }}" class="btn btn-success">14:00</a>
+            <a href="/signup/{{el.id}}/15:00:00/{{ current_user.get_id() }}" class="btn btn-success">15:00</a>
+        </div>
+    {% endfor %}
+
+{% endblock %}

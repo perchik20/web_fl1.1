@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register
+{% endblock %}
+
+{% block body %}
+<h1>Register page</h1>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
+<form method="POST">
+    <table>
+        <tr>
+            <td><input type="text" name="name" placeholder="Имя"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="surname" placeholder="Фамилия"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="second_name" placeholder="Отчество"></td>
+        </tr>
+        <tr>
+            <td><input type="text" name="number" placeholder="Номер"></td>
+        </tr>
+        <tr>
+            <td><input type="password" name="password" placeholder="Пароль"></td>
+        </tr>
+        <tr>
+            <td><input type="password" name="password2" placeholder="Повтор пароля"></td>
+        </tr>
+        <tr>
+            <td><a href="{{ url_for('login_page') }}">logIn</a></td>
+            <td ><input type="submit" value="Register"></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

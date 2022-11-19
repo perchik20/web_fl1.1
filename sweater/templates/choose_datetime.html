@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Дата и время {% endblock %}
+
+{% block style %}
+
+body {
+    background-color: #f2f3ff
+}
+
+.datetime {
+    margin-left: 650px;
+    margin-top: 20px;
+    width: 600px;
+    height: 60px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    border-radius: 15px;
+    border-color: darkblue;
+    background-color: dodgerblue
+}
+
+
+{% endblock %}
+
+{% block body %}
+    <div style="background-color: dodgerblue; width: 100%; height: 80px; padding-top: 15px">
+        <h3 style="text-align: center; ">Дата и Время</h3>
+    </div>
+
+    <form method="POST">
+      <div class="form-group">
+        <input name="datetime" class="datetime" type="date" >
+        <button type="submit">Отправить</button>
+      </div>
+
+    </form>
+
+    <div style=" position: relative; width: 600px; height: 120px; margin-left: 650px; background-color: white; border-radius: 15px; margin-top: 20px">
+        <div style="position: absolute; top: 10px; left: 10px; width: 65px; height: 65px; border-radius: 10px; background-color: slategrey; border: 1px solid dimgrey"></div>
+        <div style=" position: relative; width: 200px; height: 50px; margin-left: 80px; background-color: white; margin-top: 20px; padding-top: 35px">
+            <h6 style="margin-top: -10px; ">Master name</h6>
+            <h6 style="text-align: left; font-weight: normal; color: slategrey">Price and time</h6>
+        </div>
+
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+        <a type="button" href="/#" class="btn btn-outline-secondary" style="margin-top: 30px; margin-left: 10px; height: 30px; float: left">10:00</a>
+
+
+
+
+
+
+    </div>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Services{% endblock %}
+
+{% block body %}
+
+<h1>{{ masters2.master }} - {{ masters2.serv1 }}, {{ masters2.serv2 }}</h1>
+<h2>Your time: {{ time }}</h2>
+<h3>Choose the Service</h3>
+    <div class="container">
+        <a href="/signup/{{ masters2.id }}/{{ time }}/{{ masters2.serv1 }}/{{ current_user.get_id() }}" class="btn btn-warning">{{ masters2.serv1 }}</a>
+        <a href="/signup/{{ masters2.id }}/{{ time }}/{{ masters2.serv2 }}/{{ current_user.get_id() }}" class="btn btn-warning">{{ masters2.serv2 }}</a>
+    </div>
+
+
+
+
+
+{% endblock %}
