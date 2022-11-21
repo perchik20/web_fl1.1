@@ -10,26 +10,20 @@ class User(db.Model, UserMixin):
     second_name = db.Column(db.String(64))
     number = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String, nullable=False, unique=True)
+    levelmas = db.Column(db.String)
 
 
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    serv = db.Column(db.String(100))
-    time = db.Column(db.String, unique=True)
+    serv = db.Column(db.String(512))
+    dat = db.Column(db.String)
+    time = db.Column(db.String)
     id_user = db.Column(db.Integer, nullable=False)
     id_master = db.Column(db.Integer, nullable=False)
 
 
-class Masters(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    master = db.Column(db.String(100), nullable=False, unique=True)
-    serv1 = db.Column(db.String, nullable=False)
-    serv2 = db.Column(db.String, nullable=False)
-
-
 class AccessRights(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    id_user = db.Column(db.Integer)
     Access = db.Column(db.String, unique=True)
 
 
@@ -39,24 +33,13 @@ class IdAccess(db.Model):
     idAccess = db.Column(db.Integer)
 
 
-class Time(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    time9 = db.Column(db.DateTime)
-    time10 = db.Column(db.DateTime)
-    time11 = db.Column(db.DateTime)
-    time12 = db.Column(db.DateTime)
-    time13 = db.Column(db.DateTime)
-    time14 = db.Column(db.DateTime)
-    time15 = db.Column(db.DateTime)
-
-
 class AllServ(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    master_id = db.Column(db.Integer)
     that = db.Column(db.String)
     name_serv = db.Column(db.String, unique=True)
     price = db.Column(db.Integer)
     time = db.Column(db.String)
+    level_mas = db.Column(db.Integer)
 
 
 class Reviews (db.Model):
@@ -64,6 +47,10 @@ class Reviews (db.Model):
     name = db.Column(db.String)
     review = db.Column(db.Text)
 
+
+class LevelMaster(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    level = db.Column(db.Integer)
 
 @manager.user_loader
 def load_user(user_id):

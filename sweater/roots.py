@@ -1,9 +1,10 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date
 
 from sweater import db, app
-from sweater.models import User, Service, Masters, AccessRights, IdAccess, Time, AllServ
+from sweater.models import User, Service, IdAccess, AllServ
 
 
 @app.route("/")
@@ -44,15 +45,54 @@ def choose_master():
 @login_required
 def choose_services():
     all_serv = AllServ.query.all()
-    return render_template('choose_serv.html', all_serv=all_serv)
+    today = date.today()
+    today = today.day
+    print(today)
 
-@app.route("/masters", methods=['GET', 'POST'])
-def choose_datetime():
+    return render_template('choose_serv.html', all_serv=all_serv, today=today)
+
+
+@app.route("/masters/<int:level>/<int:id>/<int:today>", methods=['GET', 'POST'])
+def choose_datetime(id, today, level):
+    print(id)
+    print(today)
     datetime = request.form.get('datetime')
+    time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
 
-    print(datetime)
-    return render_template('choose_datetime.html')
+    masters = User.query.filter_by(levelmas=level).all()
 
+    serv = AllServ.query.filter_by(id=id).first()
+
+    set_time = Service.query.filter_by(dat=today).all()
+
+    time1 = []
+    for i in set_time:
+        time1.append(i.time)
+
+    time2 = []
+    for i in time:
+        print(i)
+        if i not in time1:
+            time2.append(i)
+        else:
+            continue
+
+    print(time2)
+
+
+
+    return render_template('choose_datetime.html', time=time2, masters=masters, serv=serv, id=id, today=today)
+
+
+@app.route("/masters/<int:id>/<int:today>/<time>/<master>/<int:user>", methods=['GET', 'POST'])
+def new_signup(id, today, time, user, master):
+
+    new_signup = Service(serv=id, time=time, id_user=user, id_master=master, dat=today)
+
+    db.session.add(new_signup)
+    db.session.commit()
+
+    return redirect(url_for('index'))
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
