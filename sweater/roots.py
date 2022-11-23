@@ -2,6 +2,8 @@ from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
+from datetime import datetime
+from calendar import monthrange
 
 from sweater import db, app
 from sweater.models import User, Service, IdAccess, AllServ
@@ -54,34 +56,50 @@ def choose_services():
 
 @app.route("/masters/<int:level>/<int:id>/<int:today>", methods=['GET', 'POST'])
 def choose_datetime(id, today, level):
-    print(id)
-    print(today)
-    datetime = request.form.get('datetime')
+    # datetime = request.form.get('datetime')
     time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
 
     masters = User.query.filter_by(levelmas=level).all()
-
     serv = AllServ.query.filter_by(id=id).first()
 
-    set_time = Service.query.filter_by(dat=today).all()
+    # all_time = []
+    All_time = dict()
 
-    time1 = []
-    for i in set_time:
-        time1.append(i.time)
+    for el in masters:
+        set_time = Service.query.filter_by(dat=today, id_master=el.id).all()
+        time1 = []
+        time2 = []
+        for i in set_time:
+            time1.append(i.time)
+        for z in time:
+            if z not in time1:
+                time2.append(z)
+            print(time2)
+        All_time[el.id] = [time2]
 
-    time2 = []
-    for i in time:
-        print(i)
-        if i not in time1:
-            time2.append(i)
-        else:
-            continue
+    print(All_time)
 
-    print(time2)
+    month = date.today()
+    month = month.month
+    current_year = datetime.now().year
+    month1 = month
+    days = monthrange(current_year, month1)[1]
 
+    today1 = date.today()
+    today1 = today1.day
+    days_arr = []
+    for i in range(today1, days+1):
+        days_arr.append(i)
 
-
-    return render_template('choose_datetime.html', time=time2, masters=masters, serv=serv, id=id, today=today)
+    return render_template('choose_datetime.html',
+                           All_time=All_time,
+                           masters=masters,
+                           serv=serv,
+                           id=id,
+                           today=today,
+                           days=days_arr,
+                           level=level
+                           )
 
 
 @app.route("/masters/<int:id>/<int:today>/<time>/<master>/<int:user>", methods=['GET', 'POST'])
