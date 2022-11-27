@@ -20,14 +20,15 @@ body {
 
 .datetime {
     margin-top: 20px;
-    width: 70px;
-    height: 70px;
+    width: 72px;
+    height: 35px;
     text-align: center;
-    color: white;
-    font-size: 5px;
-    border-radius: 15px;
+    color: black;
+    font-size: 12px;
+    border-radius: 15px 15px 0 0;
+    border: 1px solid grey;
     margin-right: 5px;
-    float: left;
+    float: bottom;
 
 }
    .btn1 {
@@ -52,19 +53,25 @@ body {
     </header>
 
 <div style="background-color : #f2f3ff; width: 100%; height: 100%; position: absolute; left: 35%; top: 10%">
-    <form method="POST">
+    <form method="POST" style="float: left">
+
       <div >
         <input name="datetime" class="datetime" type="date" >
       </div>
+
+      <div>
+          <input style="background-color: dodgerblue; width: 72px; height: 35px;border-radius: 0 0 15px 15px; color: white; border: dodgerblue" role="button" type="submit" value="time">
+      </div>
+
     </form>
 
     <div style="margin-top: 20px; margin-left: 10px; border-radius: 15px ;background-color: #f2f3ff; width: 500px; height: 70px; display: flex; flex-wrap: nowrap; overflow-x: auto;">
         {%for day in days%}
-            <a href="/masters/{{ level }}/{{ id }}/{{ day }}" style="box-shadow: 0 0 10px rgba(0,0,0,0.1); text-decoration: none; padding: 25px 25px; background-color: white; border-radius: 15px; color: #000; margin-left: 10px">{{ day }}</a>
+        <a href="/masters/{{ level }}/{{ id }}/{{ day }}" style=" text-decoration: none; padding: 15px 25px; background-color: white; border-radius: 15px; color: #000; margin-left: 10px">
+            <h3 style="font-size: 18px; text-align: center">{{ day }} <br> <span style="color: black; font-weight: unset; font-size: 10px">{{ month_name }}.</span></h3>
+        </a>
         {% endfor %}
     </div>
-
-
         {% for i in masters %}
             <div style=" position: relative; width: 600px; height: 140px; background-color: white; border-radius: 15px; margin-top: 20px">
                 <div style="position: absolute; top: 10px; left: 10px; width: 65px; height: 65px; border-radius: 50px; background-color: #e9eef7;"></div>
@@ -75,7 +82,8 @@ body {
 
                 <div style="display: flex; flex-wrap: nowrap; overflow-x: auto; background-color: white; width: 590px; height: 40px; margin-top: 40px; position: relative; padding-left: 5px">
                     {% for el in All_time[i.id][0] %}
-                            <a type="button" href="/masters/{{ id }}/{{ today }}/{{ el }}/{{ i.id }}/{{ current_user.id }}" class="btn btn-outline-secondary" style="flex: auto; display: inline-block; margin-top: 2px; margin-left: 5px;height: 38px; float: left">{{ el }}</a>
+                            <a  href="/masters/{{ id }}/{{ today }}/{{ el }}/{{ i.id }}/{{ current_user.id }}" class="btn btn-outline-secondary" style="flex: auto; display: inline-block; margin-top: 2px; margin-left: 5px;height: 38px; float: left">
+                                <h3 style="font-size: 15px; font-weight: unset; margin-top: 3px "> {{ el }} </h3></a>
                     {% endfor %}
                 </div>
             </div>

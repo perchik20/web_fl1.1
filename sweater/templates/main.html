@@ -3,13 +3,13 @@
 <title>{% block title %}Главная страница{% endblock %}</title>
 
 {% block style  %}
-body {
-background-color : #f2f3ff
+    body {
+        background-color : #f2f3ff
 
-}
+    }
 
     header {
-        background-color: dodgerblue;
+        background: linear-gradient(45deg, #175fe1, #2391d9);
         position: fixed;
         top: 0;
         z-index: 100;
@@ -23,48 +23,53 @@ background-color : #f2f3ff
 {% block body %}
 
     <header>
-        <h3 style="text-align: center; margin-top: 20px" >Салон</h3>
+        <h3 style="text-align: center; margin-top: 10px; color: white; font-size: 20px"> Atdili </h3>
+        <h3 style="text-align: center; margin-top: 10px; color: white; font-size: 15px; font-weight: lighter"> Екатерибург, Ленина, 24/8, 5 Этаж, 519 Кабинет </h3>
     </header>
 
 <div style="background-color : #f2f3ff; width: 100%; height: 100%; position: absolute; left: 25%; top: 10%">
 
-
-
     <div style="background-color: white; border-radius: 25px; width: 900px; height: 260px; margin-top: 20px; position: relative">
 
-        <div style="position: absolute; left: 20px; top: 20px; background-color: #f1f1f1; border-radius: 15px; border: 1px solid dimgrey; width: 100px; height: 100px;"></div>
+        <img src="img/main_p.png" alt="non" style="position: absolute; left: 20px; top: 20px; border-radius: 15px; border: 1px solid dimgrey; width: 100px; height: 100px;"></img>
         <h3 style="position: absolute; font-weight: normal; top: 45px; left: 130px">Atdili</h3>
-        <h5 style="position: absolute; font-weight: lighter; top: 80px; left: 130px">Ленина, 24/8, 5 Этаж, 519 Кабинет</h5>
+        <h6 style="position: absolute; font-weight: unset; top: 80px; left: 130px; font-size: 20px">Ленина, 24/8, 5 Этаж, 519 Кабинет</h6>
             <i style="position: absolute; top: 140px; left: 20px; color: dimgrey" class="fa-sharp fa-solid fa-phone"></i>
         <h7 style="font-weight: normal; position: absolute;; top: 135px; left: 45px">+7 (912) 617-00-46<br>+7 (912) 617-00-46</h7>
         <i style="position: absolute; top: 190px; left: 20px; color: dimgrey" class="fa-solid fa-clock"></i>
         <h7 style="font-weight: normal; position: absolute; top: 185px; left: 45px">Пн-Вс: с 10:00 до 22:00</h7>
 
-        <a style="position: absolute; border-radius: 15px; right: 30px; bottom: 30px; width: 190px; height: 50px; font-weight: bold" class="btn btn-primary" href="/new_order" role="button">Записаться</a>
+        <a style="position: absolute; border-radius: 15px; right: 30px; bottom: 30px; width: 230px; height: 50px; font-weight: bold" class="btn btn-primary " href="/new_order" role="button">
+            <h3 style="margin-top: 5px; font-size: 20px" > Записаться </h3>
+        </a>
     </div>
 
     <div style="background-color: white; border-radius: 25px; width: 900px; height: 250px; margin-top: 20px; position: relative">
         <h3 style="position: absolute; left: 10px; top: 10px">Описание:</h3>
         <h3 style="position: absolute; right: 247px; top: 20px">На карте</h3>
-        <div style="position: absolute; right: 20px; bottom: 20px; width: 336px; height: 155px; background-color: #e7e7e7; border-radius: 15px"></div>
+        <div style="position:absolute; width: 395px; height: 240px; right: -30px; top: 70px">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0ae7f70f8cbb3af22b36c1e316927acce30f7958f37db8b34a84b0c743e86c49&amp;border-radius=15&amp;width=336&amp;height=155&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
         <h6 style="position: absolute; left: 10px; top: 60px; font-weight: normal">Маникюр / Педикюр с душой ✨ </h6>
     </div>
 
     <div style="display: flex; flex-wrap: nowrap; overflow-x: auto; background-color: white; border-radius: 25px; width: 900px; height: 280px; margin-top: 20px; position: relative; padding-left: 20px;">
-         <h3 style="position: absolute; left: 10px; top: 10px">Специалисты {{count}}</h3>
+        <h3 style="position: absolute; left: 10px; top: 10px; font-size: 25px">Специалисты <span style="color: dimgrey">{{count}}</span></h3>
 
         {% for el in masters %}
             <div style="flex: 0 0 auto; display: inline-block; margin:60px 15px 15px 0; border-radius: 15px; height: 203px; width: 188px; background-color: white; border: 1px solid grey; "  >
 
                 <h7 style=" font-weight: bold; display: flex; align-items: center; justify-content: center; margin-top: 80px" >{{el.name}}<br></h7>
-                <h8 style=" font-weight: lighter; display: flex; align-items: center; justify-content: center;" > Мастер </h8>
+                <h8 style=" font-weight: unset; display: flex; align-items: center; justify-content: center; color: dimgrey" > Мастер </h8>
 
-                <a class="btn btn-outline-primary btn-lg btn-sm" href="/new_order/masters/{{ el.levelmas }}/{{ el.id }}" role="button" style=" border-radius: 15px; margin: 20px 45px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >Записаться</a>
+                <a class="btn btn-outline-primary btn-lg btn-sm" href="/new_order/masters/{{ el.levelmas }}/{{ el.id }}" role="button" style=" border-radius: 15px; margin: 20px 45px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
+                    <h3 style="margin-top: -1px; font-size: 15px"> Записаться </h3>
+                </a>
             </div>
         {% endfor %}
     </div>
 
-    <div style="overflow-y: auto; overflow-x: hidden; background-color: white; border-radius: 15px; width: 900px; height: 470px; margin-top: 20px; position: relative">
+    <div style="overflow-y: auto; overflow-x: hidden; background-color: white; border-radius: 25px 25px 0 0; width: 900px; height: 396px; margin-top: 20px; position: relative">
         <h3 style="text-align: left; margin-left: 10px; margin-right: 5px; margin-top: 20px; font-size: 20px; float: left">Персональные услуги </h3>
         <h3 style="text-align: left; margin-top: 20px; font-size: 20px; color: dimgrey">  {{servs}}</h3>
         <div style="margin-top: 20px">
@@ -76,17 +81,28 @@ background-color : #f2f3ff
                 </div>
                 <h6 style="text-align: left; position: absolute; left: 500px">{{i.price}} RUB</h6>
                 <h6 style="text-align: left; position: absolute; left: 650px">{{i.time}}</h6>
-                 <a class="btn btn-outline-primary btn-lg btn-sm" href="/#" role="button" style=" border-radius: 15px; margin: -5px 760px ; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >Записаться</a>
+                <a class="btn btn-outline-primary btn-lg btn-sm" href="/masters/{{ i.level_mas }}/{{ i.id }}/{{ today }}" role="button" style=" border-radius: 15px; margin: -5px 760px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
+                    <h3 style="margin-top: -1px; font-size: 15px"> Записаться </h3>
+                </a>
             </div>
             {% endfor %}
         </div>
-        <div style = 'background-color: black; width: 100%; height: 150px; border-radius: 15px'></div>
+    </div>
+    <div style ="background-color: white; width: 900px; height: 74px; border-radius: 0 0 25px 25px;">
+
+        <a href="/new_order/services" style="margin-left: 350px; width: 237px; height: 50px; font-weight: bold" type="button" class="btn btn-secondary" >
+            <div style="margin-top: 5px"> Посмотреть все </div>
+        </a>
+
     </div>
 
     <div style="background-color: white; border-radius: 25px; width: 900px; height: 126px; margin-top: 20px; position: relative; padding-top: 10px">
         <h3 style="position: absolute; left: 10px; top: 20px; font-size: 23px">Отзывы</h3>
+        <a href="/reviews" style="position: absolute; top:20px; right: 170px; text-decoration: none; color: dimgrey">Оставить отзыв</a>
+        <a href="/#" style="position: absolute; top:20px; right: 40px; text-decoration: none; color: dimgrey">Пожаловаться</a>
     </div>
 
+</div>
 
   <footer class="py-3 my-4">
     <ul class="nav justify-content-center border-bottom pb-3 mb-5">
@@ -98,9 +114,6 @@ background-color : #f2f3ff
     </ul>
     <p class="text-center text-muted">© 2022 Company, Inc</p>
   </footer>
-
-
-</div>
 
 {% endblock %}
 

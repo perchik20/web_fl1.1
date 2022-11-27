@@ -37,6 +37,11 @@ def index():
 def two_buttons():
     return render_template('new_order.html')
 
+@app.route("/reviews")
+@login_required
+def reviews():
+    return render_template('review.html')
+
 # //////////////////////Зпись через выбор мастера////////////////////////////
 
 
@@ -68,6 +73,7 @@ def choose_serv1(level, id):
 def choose_datetime1(id, today, level, mas_id, user_id):
     # datetime = request.form.get('datetime')
     time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+    month_name = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮНЬ', 'ИЮЛЬ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯБ', 'ДЕК' ]
 
     masters = User.query.filter_by(levelmas=level).all()
     serv = AllServ.query.filter_by(id=id).first()
@@ -87,6 +93,9 @@ def choose_datetime1(id, today, level, mas_id, user_id):
 
     month = date.today()
     month = month.month
+
+    month_name1 = month_name[month-1]
+
     current_year = datetime.now().year
     month1 = month
     days = monthrange(current_year, month1)[1]
@@ -104,7 +113,8 @@ def choose_datetime1(id, today, level, mas_id, user_id):
                            id=id,
                            today=today,
                            days=days_arr,
-                           level=level
+                           level=level,
+                           month_name=month_name1
                            )
 
 
@@ -118,52 +128,105 @@ def choose_services():
     today = date.today()
     today = today.day
 
-    return render_template('Serv/choose_serv.html', all_serv=all_serv, today=today)
+    return render_template('Serv/choose_serv1.html', all_serv=all_serv, today=today)
 
 
 @app.route("/masters/<int:level>/<int:id>/<int:today>", methods=['GET', 'POST'])
 def choose_datetime(id, today, level):
-    # datetime = request.form.get('datetime')
+
     time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+    month_name = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮНЬ', 'ИЮЛЬ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯБ', 'ДЕК']
 
-    masters = User.query.filter_by(levelmas=level).all()
-    serv = AllServ.query.filter_by(id=id).first()
+    date1 = request.form.get('datetime')
 
-    All_time = dict()
+    if request.method == 'POST':
+        chs_date = date1.split('-')
 
-    for el in masters:
-        set_time = Service.query.filter_by(dat=today, id_master=el.id).all()
-        time1 = []
-        time2 = []
-        for i in set_time:
-            time1.append(i.time)
-        for z in time:
-            if z not in time1:
-                time2.append(z)
+        masters = User.query.filter_by(levelmas=level).all()
+        serv = AllServ.query.filter_by(id=id).first()
 
-        All_time[el.id] = [time2]
+        All_time = dict()
 
-    month = date.today()
-    month = month.month
-    current_year = datetime.now().year
-    month1 = month
-    days = monthrange(current_year, month1)[1]
+        for el in masters:
+            set_time = Service.query.filter_by(dat=chs_date[2], id_master=el.id).all()
+            time1 = []
+            time2 = []
+            for i in set_time:
+                time1.append(i.time)
+            for z in time:
+                if z not in time1:
+                    time2.append(z)
 
-    today1 = date.today()
-    today1 = today1.day
-    days_arr = []
-    for i in range(today1, days+1):
-        days_arr.append(i)
+            All_time[el.id] = [time2]
 
-    return render_template('Serv/choose_datetime.html',
-                           All_time=All_time,
-                           masters=masters,
-                           serv=serv,
-                           id=id,
-                           today=today,
-                           days=days_arr,
-                           level=level
-                           )
+        month = date.today()
+        month = month.month
+
+        month_name1 = month_name[month - 1]
+
+        current_year = datetime.now().year
+        month1 = month
+        days = monthrange(current_year, month1)[1]
+
+        today1 = date.today()
+        today1 = today1.day
+        days_arr = []
+        for i in range(today1, days + 1):
+            days_arr.append(i)
+
+        return render_template('Serv/choose_datetime1.html',
+                               All_time=All_time,
+                               masters=masters,
+                               serv=serv,
+                               id=id,
+                               today=chs_date[2],
+                               days=days_arr,
+                               level=level,
+                               month_name=month_name1
+                               )
+    else:
+        masters = User.query.filter_by(levelmas=level).all()
+        serv = AllServ.query.filter_by(id=id).first()
+
+        All_time = dict()
+
+        for el in masters:
+            set_time = Service.query.filter_by(dat=today, id_master=el.id).all()
+            time1 = []
+            time2 = []
+            for i in set_time:
+                time1.append(i.time)
+            for z in time:
+                if z not in time1:
+                    time2.append(z)
+
+            All_time[el.id] = [time2]
+
+        month = date.today()
+        month = month.month
+
+        month_name1 = month_name[month-1]
+
+        current_year = datetime.now().year
+        month1 = month
+        days = monthrange(current_year, month1)[1]
+
+        today1 = date.today()
+        today1 = today1.day
+        days_arr = []
+        for i in range(today1, days+1):
+            days_arr.append(i)
+
+        return render_template('Serv/choose_datetime1.html',
+                               All_time=All_time,
+                               masters=masters,
+                               serv=serv,
+                               id=id,
+                               today=today,
+                               days=days_arr,
+                               level=level,
+                               month_name=month_name1
+                               )
 
 @app.route("/masters/<int:id>/<int:today>/<time>/<master>/<int:user>", methods=['GET', 'POST'])
 def new_signup(id, today, time, user, master):
