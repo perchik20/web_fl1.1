@@ -1,9 +1,8 @@
 from flask import render_template, redirect, url_for, request, flash
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import date
-from datetime import datetime
 from calendar import monthrange
+from datetime import datetime, date
 
 from sweater import db, app
 from sweater.models import User, Service, IdAccess, AllServ
@@ -64,15 +63,18 @@ def choose_master():
 def choose_serv1(level, id):
     allserv = AllServ.query.filter_by(level_mas=level).all()
     today = date.today()
-    today = today.day
+    print(today)
 
     return render_template('Mas/choose_serv.html', today=today, allserv=allserv, level=level, id=id)
 
 
 @app.route("/new_order/masters/<level>/<id>/<today>/<mas_id>/<user_id>", methods=['GET', 'POST'])
+@login_required
 def choose_datetime1(id, today, level, mas_id, user_id):
+    print(type(today))
     # datetime = request.form.get('datetime')
-    time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+    time = ['11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',
+            '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00']
     month_name = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮНЬ', 'ИЮЛЬ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯБ', 'ДЕК' ]
 
     masters = User.query.filter_by(levelmas=level).all()
@@ -132,6 +134,7 @@ def choose_services():
 
 
 @app.route("/masters/<int:level>/<int:id>/<int:today>", methods=['GET', 'POST'])
+@login_required
 def choose_datetime(id, today, level):
 
     time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
@@ -228,15 +231,51 @@ def choose_datetime(id, today, level):
                                month_name=month_name1
                                )
 
-@app.route("/masters/<int:id>/<int:today>/<time>/<master>/<int:user>", methods=['GET', 'POST'])
-def new_signup(id, today, time, user, master):
+# ////////////////////////Добовление данных в базу//////////////////////////////////
 
-    new_signup = Service(serv=id, time=time, id_user=user, id_master=master, dat=today)
+@app.route("/masters/<int:id>/<today>/<time>/<master>/<int:user>", methods=['GET', 'POST'])
+@login_required
+def new_signup(id, today, time, user, master):
+    # print(type(today))
+    new_signup = Service(serv=id, dat=today, time=time, id_user=user, id_master=master)
 
     db.session.add(new_signup)
     db.session.commit()
 
     return redirect(url_for('index'))
+
+# ///////////////////////////////Страница записей для мастера///////////////////////////////////////////////
+
+@app.route("/list_of_servs/<int:id>", methods=['GET', 'POST'])
+@login_required
+def list_of_servs(id):
+    servs=Service.query.filter_by(id_master=id).all()
+
+    mass1=[]
+
+    for i in servs:
+        mass=[]
+        mass.append(i.serv)
+        mass.append(i.dat)
+        mass.append(i.time)
+        mass.append(i.id_user)
+        mass1.append(mass)
+
+    for i in mass1:
+        z=0
+        while z < len(i):
+            if z == 0:
+                serv=AllServ.query.filter_by(id=int(i[z])).first()
+                i[z] = serv.name_serv
+            if z == 3:
+                user = User.query.filter_by(id=i[z]).first()
+                name = str(user.name) + ' ' + str(user.number)
+                i[z] = name
+            z+=1
+
+
+
+    return render_template("pages_for_chr/list_of_servs.html", mass=mass1)
 
 # //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -248,14 +287,27 @@ def login_page():
 
     if number and password:
         user = User.query.filter_by(number=number).first()
+        id_us = user.id
+        access = IdAccess.query.filter_by(idUser=id_us)
 
-        if check_password_hash(user.password, password):
-            login_user(user)
+        mass_chek = []
+        for z in access:
+            mass_chek.append(z)
 
-            return redirect(url_for('index'))
+        if len(mass_chek) == 1:
+            if check_password_hash(user.password, password):
+                login_user(user)
 
+                return render_template("pages_for_chr/user.html")
+            else:
+                flash('Login or password is not correct')
         else:
-            flash('Login or password is not correct')
+            for i in mass_chek:
+                if i.idAccess == 2 and password == 'alina':
+                    login_user(user)
+                    return render_template("pages_for_chr/master.html")
+                else:
+                    flash('Login or password is not correct')
     else:
         flash('please fill login and password fields')
     return render_template('login.html')

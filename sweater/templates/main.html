@@ -4,12 +4,12 @@
 
 {% block style  %}
     body {
-        background-color : #f2f3ff
+        background-color : #d7c4da
 
     }
 
     header {
-        background: linear-gradient(45deg, #175fe1, #2391d9);
+        background: #eecaf4;
         position: fixed;
         top: 0;
         z-index: 100;
@@ -18,85 +18,146 @@
         margin-bottom:: 100px
     }
 
+    .btn-primary{
+
+    background-color: hotpink;
+
+    color: white;
+
+    }
+
+    .btn-primaru:hover,
+
+    .btn-primary:focus,
+
+    .btn-primary:visited{
+
+    background-color: hotpink;
+
+    color: white;
+
+    }
+
 {% endblock %}
 
 {% block body %}
 
-    <header>
-        <h3 style="text-align: center; margin-top: 10px; color: white; font-size: 20px"> Atdili </h3>
-        <h3 style="text-align: center; margin-top: 10px; color: white; font-size: 15px; font-weight: lighter"> Екатерибург, Ленина, 24/8, 5 Этаж, 519 Кабинет </h3>
-    </header>
+<header>
+    <div style="margin-left: 490px; margin-top: 10px">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+          <a href="/#" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px; font-family: 'Pattaya', sans-serif;">AtDili</a>
+          <a href="/new_order" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px">Записаться</a>
+          <a href="/new_order/services" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px" data-href="#123456" >Услуги</a>
+          <a href="/new_order/masters" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px">Специалисты</a>
+          <a href="#" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px">FAQs</a>
+          <a href="#" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px">Фото Работ</a>
+          <a href="/login" class="nav-link px-2 text-white" style="margin-left: 120px; font-size: 25px">Войти</a>
+          <a href="/register" class="nav-link px-2 text-white" style="margin-left: 30px; font-size: 25px">Зарегистрироваться</a>
+      </div>
+    </div>
+</header>
 
-<div style="background-color : #f2f3ff; width: 100%; height: 100%; position: absolute; left: 25%; top: 10%">
+<div style="background-color: #e9ddea; ; width: 100%; height: 100%; padding-left: 450px; padding-top: 70px">
 
-    <div style="background-color: white; border-radius: 25px; width: 900px; height: 260px; margin-top: 20px; position: relative">
+    <div style="background-color: white; border-radius: 25px; width: 1000px; height: 260px; margin-top: 20px; position: relative">
 
         <img src="img/main_p.png" alt="non" style="position: absolute; left: 20px; top: 20px; border-radius: 15px; border: 1px solid dimgrey; width: 100px; height: 100px;"></img>
         <h3 style="position: absolute; font-weight: normal; top: 45px; left: 130px">Atdili</h3>
         <h6 style="position: absolute; font-weight: unset; top: 80px; left: 130px; font-size: 20px">Ленина, 24/8, 5 Этаж, 519 Кабинет</h6>
-            <i style="position: absolute; top: 140px; left: 20px; color: dimgrey" class="fa-sharp fa-solid fa-phone"></i>
-        <h7 style="font-weight: normal; position: absolute;; top: 135px; left: 45px">+7 (912) 617-00-46<br>+7 (912) 617-00-46</h7>
-        <i style="position: absolute; top: 190px; left: 20px; color: dimgrey" class="fa-solid fa-clock"></i>
-        <h7 style="font-weight: normal; position: absolute; top: 185px; left: 45px">Пн-Вс: с 10:00 до 22:00</h7>
 
-        <a style="position: absolute; border-radius: 15px; right: 30px; bottom: 30px; width: 230px; height: 50px; font-weight: bold" class="btn btn-primary " href="/new_order" role="button">
-            <h3 style="margin-top: 5px; font-size: 20px" > Записаться </h3>
+        <div style="position: absolute; right:10px; top: -105px; width: 250px">
+            <i style="position: absolute; top: 140px; left: 20px; color: dimgrey" class="fa-sharp fa-solid fa-phone"></i>
+            <h7 style="font-weight: normal; position: absolute;; top: 135px; left: 45px">+7 (912) 617-00-46<br>+7 (912) 617-00-46</h7>
+            <i style="position: absolute; top: 190px; left: 20px; color: dimgrey" class="fa-solid fa-clock"></i>
+            <h7 style="font-weight: normal; position: absolute; top: 185px; left: 45px">Пн-Вс: с 10:00 до 22:00</h7>
+        </div>
+
+        <h3 style="position: absolute; text-align: left; font-weight: normal; font-size:20px; height: 40px; left: 20px;top: 180px">Делаем качествнно и с любовью<br>Скидка 15% на первое посещение нашего салона.</h3>
+
+        <a href="/new_order" style="margin-left: 740px; margin-top: 180px; width: 237px; height: 50px; font-weight: bold; background: linear-gradient(45deg, #d7c4da, hotpink);" type="button" class="btn btn-secondary" >
+            <div style="margin-top: 5px"> Записаться </div>
         </a>
     </div>
 
-    <div style="background-color: white; border-radius: 25px; width: 900px; height: 250px; margin-top: 20px; position: relative">
+    <div style="background-color: white; border-radius: 25px; width: 1000px; height: 250px; margin-top: 20px; position: relative">
         <h3 style="position: absolute; left: 10px; top: 10px">Описание:</h3>
         <h3 style="position: absolute; right: 247px; top: 20px">На карте</h3>
         <div style="position:absolute; width: 395px; height: 240px; right: -30px; top: 70px">
-            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0ae7f70f8cbb3af22b36c1e316927acce30f7958f37db8b34a84b0c743e86c49&amp;border-radius=15&amp;width=336&amp;height=155&amp;lang=ru_RU&amp;scroll=true"></script>
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0ae7f70f8cbb3af22b36c1e316927acce30f7958f37db8b34a84b0c743e86c49&amp;width=336&amp;height=155&amp;lang=ru_RU&amp;scroll=true"></script>
         </div>
         <h6 style="position: absolute; left: 10px; top: 60px; font-weight: normal">Маникюр / Педикюр с душой ✨ </h6>
     </div>
 
-    <div style="display: flex; flex-wrap: nowrap; overflow-x: auto; background-color: white; border-radius: 25px; width: 900px; height: 280px; margin-top: 20px; position: relative; padding-left: 20px;">
-        <h3 style="position: absolute; left: 10px; top: 10px; font-size: 25px">Специалисты <span style="color: dimgrey">{{count}}</span></h3>
+<!--    <div style="display: flex; flex-wrap: nowrap; overflow-x: auto; background-color: white; border-radius: 25px; width: 1000px; height: 280px; margin-top: 20px; position: relative; padding-left: 20px;">-->
+<!--        <h3 style="position: absolute; left: 10px; top: 10px; font-size: 25px">Специалисты <span style="color: dimgrey">{{count}}</span></h3>-->
 
-        {% for el in masters %}
-            <div style="flex: 0 0 auto; display: inline-block; margin:60px 15px 15px 0; border-radius: 15px; height: 203px; width: 188px; background-color: white; border: 1px solid grey; "  >
+<!--        {% for el in masters %}-->
+<!--            <div style="flex: 0 0 auto; display: inline-block; margin:60px 15px 15px 0; border-radius: 15px; height: 203px; width: 188px; background-color: white; border: 1px solid grey; "  >-->
 
-                <h7 style=" font-weight: bold; display: flex; align-items: center; justify-content: center; margin-top: 80px" >{{el.name}}<br></h7>
-                <h8 style=" font-weight: unset; display: flex; align-items: center; justify-content: center; color: dimgrey" > Мастер </h8>
+<!--                <h7 style=" font-weight: bold; display: flex; align-items: center; justify-content: center; margin-top: 80px" >{{el.name}}<br></h7>-->
+<!--                <h8 style=" font-weight: unset; display: flex; align-items: center; justify-content: center; color: dimgrey" > Мастер </h8>-->
 
-                <a class="btn btn-outline-primary btn-lg btn-sm" href="/new_order/masters/{{ el.levelmas }}/{{ el.id }}" role="button" style=" border-radius: 15px; margin: 20px 45px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
-                    <h3 style="margin-top: -1px; font-size: 15px"> Записаться </h3>
-                </a>
-            </div>
-        {% endfor %}
-    </div>
+<!--                <a class="btn btn-primary btn-lg btn-sm" href="/new_order/masters/{{ el.levelmas }}/{{ el.id }}" role="button" style=" background-color: hotpink; border-radius: 15px; margin: 20px 45px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >-->
+<!--                    <h3 style="margin-top: -1px; font-size: 15px"> Записаться </h3>-->
+<!--                </a>-->
+<!--            </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
 
-    <div style="overflow-y: auto; overflow-x: hidden; background-color: white; border-radius: 25px 25px 0 0; width: 900px; height: 396px; margin-top: 20px; position: relative">
-        <h3 style="text-align: left; margin-left: 10px; margin-right: 5px; margin-top: 20px; font-size: 20px; float: left">Персональные услуги </h3>
-        <h3 style="text-align: left; margin-top: 20px; font-size: 20px; color: dimgrey">  {{servs}}</h3>
-        <div style="margin-top: 20px">
+    <div style="overflow-y: auto; overflow-x: hidden; background-color: white; border-radius: 25px 25px 0 0; width: 1000px; height: 396px; margin-top: 20px; position: relative">
+        <h3 style="text-align: left; margin-left: 10px; margin-right: 5px; margin-top: 20px; font-size: 25px; float: bottom"> Что мы предлагаем? </h3>
+        <h6 style="margin-left: 10px; margin-top: 40px;">Мы предоставляем более 15-ти услуг, вы точно найдёте то, что нужно именно Вам.</h6>
+<!--        <h3 style="text-align: left; margin-top: 20px; font-size: 20px; color: dimgrey">  {{servs}}</h3>-->
+        <div style="margin-top: 40px">
             {% for i in all_serv %}
             <div  style=" position: relative; width: 900px; height: 80px; background-color: #FFF; border-radius: 25px;">
-                <div style="position: absolute; top: 10px; left: 10px; width: 55px; height: 55px; border-radius: 10px; background-color: #e9eef7;"></div>
+                <div style="position: absolute; top: 10px; left: 10px; width: 55px; height: 55px; border-radius: 10px; background: linear-gradient(45deg, #d7c4da, #fff);"></div>
                 <div style=" position: relative; width: 600px; height: 20px; margin-left: 80px; background-color: #fff; margin-top: -15px; padding-top: 35px; ">
                     <h6 style="text-align: left; margin-left: -10px; margin-top: -5px">{{i.name_serv}}</h6>
                 </div>
                 <h6 style="text-align: left; position: absolute; left: 500px">{{i.price}} RUB</h6>
                 <h6 style="text-align: left; position: absolute; left: 650px">{{i.time}}</h6>
-                <a class="btn btn-outline-primary btn-lg btn-sm" href="/masters/{{ i.level_mas }}/{{ i.id }}/{{ today }}" role="button" style=" border-radius: 15px; margin: -5px 760px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
-                    <h3 style="margin-top: -1px; font-size: 15px"> Записаться </h3>
+                <a class="btn btn-primary btn-lg btn-sm" href="/masters/{{ i.level_mas }}/{{ i.id }}/{{ today }}" role="button" style="border-radius: 15px; margin: -5px 760px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
+                    <h3 style="margin-top: -1px; font-size: 15px; "> Записаться </h3>
                 </a>
             </div>
             {% endfor %}
         </div>
-    </div>
-    <div style ="background-color: white; width: 900px; height: 74px; border-radius: 0 0 25px 25px;">
+        </div>
 
-        <a href="/new_order/services" style="margin-left: 350px; width: 237px; height: 50px; font-weight: bold" type="button" class="btn btn-secondary" >
+        <div style ="background-color: white; width: 1000px; height: 74px; border-radius: 0 0 25px 25px;">
+
+        <a href="/new_order/services" style="margin-left: 350px; width: 237px; height: 50px; font-weight: bold; background: linear-gradient(45deg, #d7c4da, hotpink);" type="button" class="btn btn-secondary" >
             <div style="margin-top: 5px"> Посмотреть все </div>
         </a>
 
     </div>
 
-    <div style="background-color: white; border-radius: 25px; width: 900px; height: 126px; margin-top: 20px; position: relative; padding-top: 10px">
+    <div style="background-color: white; border-radius: 25px; width: 1000px; height: 396px; margin-top: 20px; position: relative; padding-top: 10px">
+        <h3 style="font-size: 25px; margin-top: 20px; margin-left: 20px">Почему мы?</h3>
+
+        <div style="margin-top: 40px">
+            <div style="float: left; margin-left: 20px">
+                <h3 style="color: hotpink">O1</h3>
+                <div style="border-bottom: 1px solid hotpink; width: 300px" ></div>
+                <h6 style="margin-top: 10px; font-size: 18px; font-weight: bold">Стерилизация и обработка<br>инструментов по СаНПиН</h6>
+                <h6 style="margin-top: 20px; font-size: 17px; font-weight: lighter">Мы ответственно подходим к<br>подготовке инструментов перед<br>каждым клиентом.</h6>
+            </div>
+            <div style="float: left; margin-left: 20px">
+                <h3 style="color: hotpink">O2</h3>
+                <div style="border-bottom: 1px solid hotpink; width: 300px" ></div>
+                <h6 style="margin-top: 10px; font-size: 18px; font-weight: bold">Наши мастера — люди с<br>большим опытом</h6>
+                <h6 style="margin-top: 20px; font-size: 17px; font-weight: lighter">Мы отбираем в команду только<br>профессионалов с большим стажем</h6>
+            </div>
+            <div style="float: left; margin-left: 20px">
+                <h3 style="color: hotpink">O3</h3>
+                <div style="border-bottom: 1px solid hotpink; width: 300px" ></div>
+                <h6 style="margin-top: 10px; font-size: 18px; font-weight: bold">Мы находимся в центре города</h6>
+                <h6 style="margin-top: 20px; font-size: 17px; font-weight: lighter">Самое удобное местоположение, окна<br>выходят на Пассаж.</h6>
+            </div>
+        </div>
+    </div>
+    <div style="background-color: white; border-radius: 25px; width: 1000px; height: 126px; margin-top: 20px; position: relative; padding-top: 10px">
         <h3 style="position: absolute; left: 10px; top: 20px; font-size: 23px">Отзывы</h3>
         <a href="/reviews" style="position: absolute; top:20px; right: 170px; text-decoration: none; color: dimgrey">Оставить отзыв</a>
         <a href="/#" style="position: absolute; top:20px; right: 40px; text-decoration: none; color: dimgrey">Пожаловаться</a>
@@ -104,16 +165,17 @@
 
 </div>
 
-  <footer class="py-3 my-4">
-    <ul class="nav justify-content-center border-bottom pb-3 mb-5">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li>
-    </ul>
-    <p class="text-center text-muted">© 2022 Company, Inc</p>
-  </footer>
+<div style="width: 100%; height: 20px; background-color: #e9ddea"></div>
+
+<div style="position: absolute; width: 486px; height: 252px; background-color: hotpink; top: 1800px; left: 200px">
+    <h1 style="color: white; margin-top: 20px; margin-left: 20px; float: bottom">Контакты</h1>
+    <h3 style="color: white; margin-top: 30px; margin-left: 20px; float: bottom; font-weight: lighter; font-size: 25px">+7-(982)-718-55-44</h3>
+    <h3 style="color: white; margin-top: 20px; margin-left: 20px; float: bottom; font-weight: lighter; font-size: 25px">@atdili.studio<br>Екатеринбург, Ленина 24/8, 519</h3>
+</div>
+
+<footer>
+    <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0ae7f70f8cbb3af22b36c1e316927acce30f7958f37db8b34a84b0c743e86c49&amp;border-radius=15&amp;width=100%&amp;height=518&amp;lang=ru_RU&amp;scroll=true"></script>
+</footer>
 
 {% endblock %}
 
