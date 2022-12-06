@@ -28,6 +28,8 @@ def index():
     today = date.today()
     today = today.day
 
+    # photo = open('sweater/templates/img/main_p.png', 'rb')
+
     return render_template("main.html", masters=masters, count=count, all_serv=all_serv, today=today, servs=servs)
 
 
@@ -274,6 +276,10 @@ def choose_datetime(id, today, level):
         for i in range(today1, days+1):
             days_arr.append(i)
 
+
+
+
+
         return render_template('Serv/choose_datetime1.html',
                                All_time=All_time,
                                masters=masters,
@@ -283,6 +289,7 @@ def choose_datetime(id, today, level):
                                days=days_arr,
                                level=level,
                                month_name=month_name1
+
                                )
 
 # ////////////////////////Добовление данных в базу//////////////////////////////////
@@ -418,3 +425,19 @@ def redirect_to_signin(response):
     if response.status_code == 401:
         return redirect(url_for('login_page') + '?next=' + request.url)
     return response
+
+# /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+# from flask import Flask, render_template, redirect, url_for, request
+# app = Flask(__name__)
+#
+# @app.route('/', methods=['GET', 'POST'])
+# def home():
+#     return render_template('home.html')
+#
+# @app.route('/register')
+# def register():
+#  return render_template('register.html')
+#
+# @app.route('/registerV')
+# def registerV():
+#  return render_template('registerV.html')
