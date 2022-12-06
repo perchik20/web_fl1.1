@@ -16,8 +16,8 @@ class User(db.Model, UserMixin):
 class Service(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     serv = db.Column(db.String(512))
-    dat = db.Column(db.String)
-    time = db.Column(db.String)
+    dat = db.Column(db.Date)
+    time = db.Column(db.Time)
     id_user = db.Column(db.Integer, nullable=False)
     id_master = db.Column(db.Integer, nullable=False)
 
@@ -38,7 +38,7 @@ class AllServ(db.Model):
     that = db.Column(db.String)
     name_serv = db.Column(db.String, unique=True)
     price = db.Column(db.Integer)
-    time = db.Column(db.String)
+    time = db.Column(db.Time)
     level_mas = db.Column(db.Integer)
 
 

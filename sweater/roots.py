@@ -8,7 +8,7 @@ from sweater import db, app
 from sweater.models import User, Service, IdAccess, AllServ
 
 
-@app.route("/")
+@app.route("/", methods=['POST', 'GET'])
 def index():
 
     idaccess = IdAccess.query.filter_by(idAccess=2).all()
@@ -39,7 +39,7 @@ def two_buttons():
 @app.route("/reviews")
 @login_required
 def reviews():
-    return render_template('review.html')
+    return render_template('pages_for_chr/review.html')
 
 # //////////////////////Зпись через выбор мастера////////////////////////////
 
@@ -63,7 +63,7 @@ def choose_master():
 def choose_serv1(level, id):
     allserv = AllServ.query.filter_by(level_mas=level).all()
     today = date.today()
-    print(today)
+    # print(today)
 
     return render_template('Mas/choose_serv.html', today=today, allserv=allserv, level=level, id=id)
 
@@ -71,54 +71,102 @@ def choose_serv1(level, id):
 @app.route("/new_order/masters/<level>/<id>/<today>/<mas_id>/<user_id>", methods=['GET', 'POST'])
 @login_required
 def choose_datetime1(id, today, level, mas_id, user_id):
-    print(type(today))
-    # datetime = request.form.get('datetime')
+
     time = ['11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',
             '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00']
     month_name = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮНЬ', 'ИЮЛЬ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯБ', 'ДЕК' ]
 
-    masters = User.query.filter_by(levelmas=level).all()
-    serv = AllServ.query.filter_by(id=id).first()
+    date1 = request.form.get('datetime')
 
-    All_time = dict()
 
-    for el in masters:
-        set_time = Service.query.filter_by(dat=today, id_master=el.id).all()
-        time1 = []
-        time2 = []
-        for i in set_time:
-            time1.append(i.time)
-        for z in time:
-            if z not in time1:
-                time2.append(z)
-        All_time[el.id] = [time2]
+    if request.method == 'POST':
 
-    month = date.today()
-    month = month.month
+        masters = User.query.filter_by(levelmas=level).all()
+        serv = AllServ.query.filter_by(id=id).first()
 
-    month_name1 = month_name[month-1]
+        All_time = dict()
 
-    current_year = datetime.now().year
-    month1 = month
-    days = monthrange(current_year, month1)[1]
+        for el in masters:
+            set_time = Service.query.filter_by(dat=date1, id_master=el.id).all()
+            time1 = []
+            time2 = []
+            for i in set_time:
+                time1.append(str(i.time))
+            for z in time:
+                if z not in time1:
+                    time2.append(z)
+            All_time[el.id] = [time2]
 
-    today1 = date.today()
-    today1 = today1.day
-    days_arr = []
-    for i in range(today1, days+1):
-        days_arr.append(i)
+        month = date.today()
+        month = month.month
 
-    return render_template('Mas/choose_datetime.html',
-                           All_time=All_time,
-                           masters=masters,
-                           serv=serv,
-                           id=id,
-                           today=today,
-                           days=days_arr,
-                           level=level,
-                           month_name=month_name1
-                           )
+        month_name1 = month_name[month-1]
 
+        current_year = datetime.now().year
+        month1 = month
+        days = monthrange(current_year, month1)[1]
+
+        today1 = date.today()
+        today1 = today1.day
+        days_arr = []
+        for i in range(today1, days+1):
+            days_arr.append(i)
+
+        return render_template('Mas/choose_datetime.html',
+                               All_time=All_time,
+                               masters=masters,
+                               serv=serv,
+                               id=id,
+                               today=today,
+                               days=days_arr,
+                               level=level,
+                               month_name=month_name1
+                               )
+    else:
+
+        masters = User.query.filter_by(levelmas=level).all()
+        serv = AllServ.query.filter_by(id=id).first()
+
+        dt = datetime.strptime(today, '%Y-%m-%d')
+
+        All_time = dict()
+
+        for el in masters:
+            set_time = Service.query.filter_by(dat=dt.date(), id_master=el.id).all()
+            time1 = []
+            time2 = []
+            for i in set_time:
+                time1.append(str(i.time))
+            for z in time:
+                if z not in time1:
+                    time2.append(z)
+            All_time[el.id] = [time2]
+
+        month = date.today()
+        month = month.month
+
+        month_name1 = month_name[month-1]
+
+        current_year = datetime.now().year
+        month1 = month
+        days = monthrange(current_year, month1)[1]
+
+        today1 = date.today()
+        today1 = today1.day
+        days_arr = []
+        for i in range(today1, days+1):
+            days_arr.append(i)
+
+        return render_template('Mas/choose_datetime.html',
+                               All_time=All_time,
+                               masters=masters,
+                               serv=serv,
+                               id=id,
+                               today=today,
+                               days=days_arr,
+                               level=level,
+                               month_name=month_name1
+                               )
 
 # //////////////////////Зпись через выбор услуги////////////////////////////
 
@@ -128,34 +176,36 @@ def choose_datetime1(id, today, level, mas_id, user_id):
 def choose_services():
     all_serv = AllServ.query.all()
     today = date.today()
-    today = today.day
+    # print(today)
 
     return render_template('Serv/choose_serv1.html', all_serv=all_serv, today=today)
 
 
-@app.route("/masters/<int:level>/<int:id>/<int:today>", methods=['GET', 'POST'])
+@app.route("/masters/<int:level>/<int:id>/<today>", methods=['GET', 'POST'])
 @login_required
 def choose_datetime(id, today, level):
-
-    time = ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
+    time = ['11:00:00', '12:00:00', '13:00:00', '14:00:00', '15:00:00', '16:00:00',
+            '17:00:00', '18:00:00', '19:00:00', '20:00:00', '21:00:00', '22:00:00']
     month_name = ['ЯНВ', 'ФЕВ', 'МАР', 'АПР', 'МАЙ', 'ИЮНЬ', 'ИЮЛЬ', 'АВГ', 'СЕН', 'ОКТ', 'НОЯБ', 'ДЕК']
 
     date1 = request.form.get('datetime')
 
     if request.method == 'POST':
-        chs_date = date1.split('-')
 
         masters = User.query.filter_by(levelmas=level).all()
         serv = AllServ.query.filter_by(id=id).first()
 
+        # dt = datetime.strptime(today, '%Y-%m-%d')
+
         All_time = dict()
 
         for el in masters:
-            set_time = Service.query.filter_by(dat=chs_date[2], id_master=el.id).all()
+            set_time = Service.query.filter_by(dat=date1, id_master=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
-                time1.append(i.time)
+                time1.append(str(i.time))
+            print(time1)
             for z in time:
                 if z not in time1:
                     time2.append(z)
@@ -182,7 +232,7 @@ def choose_datetime(id, today, level):
                                masters=masters,
                                serv=serv,
                                id=id,
-                               today=chs_date[2],
+                               today=today,
                                days=days_arr,
                                level=level,
                                month_name=month_name1
@@ -191,14 +241,18 @@ def choose_datetime(id, today, level):
         masters = User.query.filter_by(levelmas=level).all()
         serv = AllServ.query.filter_by(id=id).first()
 
+        dt = datetime.strptime(today, '%Y-%m-%d')
+
         All_time = dict()
 
+
         for el in masters:
-            set_time = Service.query.filter_by(dat=today, id_master=el.id).all()
+            set_time = Service.query.filter_by(dat=dt.date(), id_master=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
-                time1.append(i.time)
+                time1.append(str(i.time))
+            print(time1)
             for z in time:
                 if z not in time1:
                     time2.append(z)
@@ -236,8 +290,14 @@ def choose_datetime(id, today, level):
 @app.route("/masters/<int:id>/<today>/<time>/<master>/<int:user>", methods=['GET', 'POST'])
 @login_required
 def new_signup(id, today, time, user, master):
-    # print(type(today))
-    new_signup = Service(serv=id, dat=today, time=time, id_user=user, id_master=master)
+
+    dt = datetime.strptime(today, '%Y-%m-%d')
+    print(time)
+    tm = datetime.strptime(time, '%H:%M:%S')
+    print(tm.time())
+    print(type(tm))
+
+    new_signup = Service(serv=id, dat=dt, time=tm.time(), id_user=user, id_master=master)
 
     db.session.add(new_signup)
     db.session.commit()

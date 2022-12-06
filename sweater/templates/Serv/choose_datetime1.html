@@ -68,7 +68,7 @@ body {
     <div style="margin-top: 20px; margin-left: 10px; border-radius: 15px ;background-color: #f2f3ff; width: 500px; height: 70px; display: flex; flex-wrap: nowrap; overflow-x: auto;">
         {%for day in days%}
         <a href="/masters/{{ level }}/{{ id }}/{{ day }}" style=" text-decoration: none; padding: 15px 25px; background-color: white; border-radius: 15px; color: #000; margin-left: 10px">
-            <h3 style="font-size: 18px; text-align: center">{{ day }} <br> <span style="color: black; font-weight: unset; font-size: 10px">{{ month_name }}.</span></h3>
+            <h3 style="font-size: 18px; text-align: center">{{ day }}<br> <span style="color: black; font-weight: unset; font-size: 10px">{{ month_name }}.</span></h3>
         </a>
         {% endfor %}
     </div>
