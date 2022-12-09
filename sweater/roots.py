@@ -5,19 +5,20 @@ from calendar import monthrange
 from datetime import datetime, date
 
 from sweater import db, app
-from sweater.models import User, Service, IdAccess, AllServ
+from sweater.models import User, Appointments, UserRoles, Services
 
 
 @app.route("/", methods=['POST', 'GET'])
 def index():
 
-    idaccess = IdAccess.query.filter_by(idAccess=2).all()
+    idaccess = UserRoles.query.filter_by(role_id=2).all()
     masters = []
     for i in idaccess:
-        masters.append(User.query.filter_by(id=i.idUser).first())
+        masters.append(User.query.filter_by(id=i.user_id).first())
     count = len(masters)
 
-    all_serv = AllServ.query.all()
+    all_serv = Services.query.all()
+    all_serv = all_serv[slice(4)]
 
     servs = 0
     for i in all_serv:
@@ -28,9 +29,13 @@ def index():
     today = date.today()
     today = today.day
 
-    # photo = open('sweater/templates/img/main_p.png', 'rb')
+    examples = []
+    x = 1
+    while x < 11:
+        examples.append(f'static/examples/p{x}.jpg')
+        x+=1
 
-    return render_template("main.html", masters=masters, count=count, all_serv=all_serv, today=today, servs=servs)
+    return render_template("main.html", masters=masters, count=count, all_serv=all_serv, today=today, servs=servs, exmp=examples)
 
 
 @app.route("/new_order")
@@ -51,10 +56,10 @@ def reviews():
 def choose_master():
     masters = []
 
-    idaccess = IdAccess.query.filter_by(idAccess=2).all()
+    idaccess = UserRoles.query.filter_by(role_id=2).all()
 
     for i in idaccess:
-        z = User.query.filter_by(id=i.idUser).first()
+        z = User.query.filter_by(id=i.user_id).first()
         masters.append(z)
 
     return render_template("Mas/choose_master.html", masters=masters)
@@ -63,9 +68,8 @@ def choose_master():
 @app.route("/new_order/masters/<int:level>/<int:id>", methods=['GET', 'POST'])
 @login_required
 def choose_serv1(level, id):
-    allserv = AllServ.query.filter_by(level_mas=level).all()
+    allserv = Services.query.filter_by(master_level_id=level).all()
     today = date.today()
-    # print(today)
 
     return render_template('Mas/choose_serv.html', today=today, allserv=allserv, level=level, id=id)
 
@@ -84,12 +88,12 @@ def choose_datetime1(id, today, level, mas_id, user_id):
     if request.method == 'POST':
 
         masters = User.query.filter_by(levelmas=level).all()
-        serv = AllServ.query.filter_by(id=id).first()
+        serv = Services.query.filter_by(id=id).first()
 
         All_time = dict()
 
         for el in masters:
-            set_time = Service.query.filter_by(dat=date1, id_master=el.id).all()
+            set_time = Appointments.query.filter_by(dat=date1, master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -127,14 +131,14 @@ def choose_datetime1(id, today, level, mas_id, user_id):
     else:
 
         masters = User.query.filter_by(levelmas=level).all()
-        serv = AllServ.query.filter_by(id=id).first()
+        serv = Services.query.filter_by(id=id).first()
 
         dt = datetime.strptime(today, '%Y-%m-%d')
 
         All_time = dict()
 
         for el in masters:
-            set_time = Service.query.filter_by(dat=dt.date(), id_master=el.id).all()
+            set_time = Appointments.query.filter_by(dat=dt.date(), master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -159,6 +163,8 @@ def choose_datetime1(id, today, level, mas_id, user_id):
         for i in range(today1, days+1):
             days_arr.append(i)
 
+
+
         return render_template('Mas/choose_datetime.html',
                                All_time=All_time,
                                masters=masters,
@@ -176,7 +182,7 @@ def choose_datetime1(id, today, level, mas_id, user_id):
 @app.route("/new_order/services")
 @login_required
 def choose_services():
-    all_serv = AllServ.query.all()
+    all_serv = Services.query.all()
     today = date.today()
     # print(today)
 
@@ -195,14 +201,14 @@ def choose_datetime(id, today, level):
     if request.method == 'POST':
 
         masters = User.query.filter_by(levelmas=level).all()
-        serv = AllServ.query.filter_by(id=id).first()
+        serv = Services.query.filter_by(id=id).first()
 
         # dt = datetime.strptime(today, '%Y-%m-%d')
 
         All_time = dict()
 
         for el in masters:
-            set_time = Service.query.filter_by(dat=date1, id_master=el.id).all()
+            set_time = Appointments.query.filter_by(dat=date1, master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -241,7 +247,7 @@ def choose_datetime(id, today, level):
                                )
     else:
         masters = User.query.filter_by(levelmas=level).all()
-        serv = AllServ.query.filter_by(id=id).first()
+        serv = Services.query.filter_by(id=id).first()
 
         dt = datetime.strptime(today, '%Y-%m-%d')
 
@@ -249,7 +255,7 @@ def choose_datetime(id, today, level):
 
 
         for el in masters:
-            set_time = Service.query.filter_by(dat=dt.date(), id_master=el.id).all()
+            set_time = Appointments.query.filter_by(dat=dt.date(), master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -304,19 +310,19 @@ def new_signup(id, today, time, user, master):
     print(tm.time())
     print(type(tm))
 
-    new_signup = Service(serv=id, dat=dt, time=tm.time(), id_user=user, id_master=master)
+    new_signup = Appointments(serv=id, dat=dt, time=tm.time(), user_id=user, master_id=master)
 
     db.session.add(new_signup)
     db.session.commit()
 
-    return redirect(url_for('index'))
+    return redirect(url_for('two_buttons'))
 
 # ///////////////////////////////Страница записей для мастера///////////////////////////////////////////////
 
 @app.route("/list_of_servs/<int:id>", methods=['GET', 'POST'])
 @login_required
 def list_of_servs(id):
-    servs=Service.query.filter_by(id_master=id).all()
+    servs=Appointments.query.filter_by(master_id=id).all()
 
     mass1=[]
 
@@ -325,15 +331,15 @@ def list_of_servs(id):
         mass.append(i.serv)
         mass.append(i.dat)
         mass.append(i.time)
-        mass.append(i.id_user)
+        mass.append(i.user_id)
         mass1.append(mass)
 
     for i in mass1:
         z=0
         while z < len(i):
             if z == 0:
-                serv=AllServ.query.filter_by(id=int(i[z])).first()
-                i[z] = serv.name_serv
+                serv=Services.query.filter_by(id=int(i[z])).first()
+                i[z] = serv.name
             if z == 3:
                 user = User.query.filter_by(id=i[z]).first()
                 name = str(user.name) + ' ' + str(user.number)
@@ -355,7 +361,7 @@ def login_page():
     if number and password:
         user = User.query.filter_by(number=number).first()
         id_us = user.id
-        access = IdAccess.query.filter_by(idUser=id_us)
+        access = UserRoles.query.filter_by(user_id=id_us)
 
         mass_chek = []
         for z in access:
@@ -365,14 +371,33 @@ def login_page():
             if check_password_hash(user.password, password):
                 login_user(user)
 
-                return render_template("pages_for_chr/user.html")
+                all_serv = Services.query.all()
+                all_serv = all_serv[slice(4)]
+
+                examples = []
+                x = 1
+                while x < 11:
+                    examples.append(f'static/examples/p{x}.jpg')
+                    x += 1
+
+                return render_template("pages_for_chr/user.html", exmp=examples, all_serv=all_serv)
             else:
                 flash('Login or password is not correct')
         else:
             for i in mass_chek:
-                if i.idAccess == 2 and password == 'alina':
+                if i.role_id == 2 and password == user.password:
                     login_user(user)
-                    return render_template("pages_for_chr/master.html")
+
+                    all_serv = Services.query.all()
+                    all_serv = all_serv[slice(4)]
+
+                    examples = []
+                    x = 1
+                    while x < 11:
+                        examples.append(f'static/examples/p{x}.jpg')
+                        x += 1
+
+                    return render_template("pages_for_chr/master.html", exmp=examples, all_serv=all_serv)
                 else:
                     flash('Login or password is not correct')
     else:
@@ -403,7 +428,7 @@ def register():
 
             user = User.query.filter_by(number=number).first()
 
-            new_access = IdAccess(idUser=user.id, idAccess=1)
+            new_access = UserRoles(user_id=user.id, role_id=1)
 
             db.session.add(new_access)
             db.session.commit()
@@ -427,17 +452,3 @@ def redirect_to_signin(response):
     return response
 
 # /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-# from flask import Flask, render_template, redirect, url_for, request
-# app = Flask(__name__)
-#
-# @app.route('/', methods=['GET', 'POST'])
-# def home():
-#     return render_template('home.html')
-#
-# @app.route('/register')
-# def register():
-#  return render_template('register.html')
-#
-# @app.route('/registerV')
-# def registerV():
-#  return render_template('registerV.html')

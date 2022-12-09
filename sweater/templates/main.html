@@ -103,7 +103,7 @@
     </div>
 
 
-    <div style="overflow-y: auto; overflow-x: hidden; background-color: white; border-radius: 25px 25px 0 0; width: 1000px; height: 396px; margin-top: 20px; position: relative">
+    <div style=" background-color: white; border-radius: 25px 25px 0 0; width: 1000px; height: 396px; margin-top: 20px; position: relative">
         <h3 style="text-align: left; margin-left: 10px; margin-right: 5px; margin-top: 20px; font-size: 25px; float: bottom"> Что мы предлагаем? </h3>
         <h6 style="margin-left: 10px; margin-top: 40px;">Мы предоставляем более 15-ти услуг, вы точно найдёте то, что нужно именно Вам.</h6>
         <div style="margin-top: 40px">
@@ -111,11 +111,11 @@
             <div  style=" position: relative; width: 900px; height: 80px; background-color: #FFF; border-radius: 25px;">
                 <div style="position: absolute; top: 10px; left: 10px; width: 55px; height: 55px; border-radius: 10px; background: linear-gradient(45deg, #d7c4da, #fff);"></div>
                 <div style=" position: relative; width: 600px; height: 20px; margin-left: 80px; background-color: #fff; margin-top: -15px; padding-top: 35px; ">
-                    <h6 style="text-align: left; margin-left: -10px; margin-top: -5px">{{i.name_serv}}</h6>
+                    <h6 style="text-align: left; margin-left: -10px; margin-top: -5px">{{i.name}}</h6>
                 </div>
-                <h6 style="text-align: left; position: absolute; left: 500px">{{i.price}} RUB</h6>
-                <h6 style="text-align: left; position: absolute; left: 650px">{{i.time}}</h6>
-                <a class="btn btn-primary btn-lg btn-sm" href="/masters/{{ i.level_mas }}/{{ i.id }}/{{ today }}" role="button" style="border-radius: 15px; margin: -5px 760px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
+                <h6 style="text-align: left; position: absolute; left: 550px">{{i.price}} RUB</h6>
+                <h6 style="text-align: left; position: absolute; left: 700px">{{i.duration}}</h6>
+                <a class="btn btn-primary btn-lg btn-sm" href="/masters/{{ i.master_level_id }}/{{ i.id }}/{{ today }}" role="button" style="border-radius: 15px; margin: -5px 870px; width: 99px; height: 27px; font-size: 15px; font-weight: initial;" >
                     <h3 style="margin-top: -1px; font-size: 15px; "> Записаться </h3>
                 </a>
             </div>
@@ -155,6 +155,19 @@
             </div>
         </div>
     </div>
+
+     <div style="background-color: white; border-radius: 25px; width: 1000px; height: 300px; margin-top: 20px; position: relative">
+
+        <h3 style="font-size: 25px; margin-top: 20px; margin-left: 20px">Примеры работ</h3>
+        <div style="display: flex; flex-wrap: nowrap; overflow-x: auto; margin-top: 40px; width: 99%; margin-left: 5px; border-radius: 25px">
+             {% for i in exmp %}
+                 <div style="float: left">
+                    <img src="{{ i }}" alt="non" style="width: 200px; height: 200px; border-radius: 10px; margin-left: 20px"/>
+                 </div>
+             {% endfor %}
+        </div>
+    </div>
+
     <div style="background-color: white; border-radius: 25px; width: 1000px; height: 126px; margin-top: 20px; position: relative; padding-top: 10px">
         <h3 style="position: absolute; left: 10px; top: 20px; font-size: 23px">Отзывы</h3>
         <a href="/reviews" style="position: absolute; top:20px; right: 170px; text-decoration: none; color: dimgrey">Оставить отзыв</a>
@@ -165,7 +178,7 @@
 
 <div style="width: 100%; height: 20px; background-color: #e9ddea"></div>
 
-<div style="position: absolute; width: 486px; height: 252px; background-color: hotpink; top: 1800px; left: 200px">
+<div style="position: absolute; width: 486px; height: 252px; background-color: hotpink; top: 2350px; left: 200px">
     <h1 style="color: white; margin-top: 20px; margin-left: 20px; float: bottom">Контакты</h1>
     <h3 style="color: white; margin-top: 30px; margin-left: 20px; float: bottom; font-weight: lighter; font-size: 25px">+7-(982)-718-55-44</h3>
     <h3 style="color: white; margin-top: 20px; margin-left: 20px; float: bottom; font-weight: lighter; font-size: 25px">@atdili.studio<br>Екатеринбург, Ленина 24/8, 519</h3>

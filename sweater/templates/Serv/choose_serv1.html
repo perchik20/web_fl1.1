@@ -29,13 +29,13 @@
 
         {% for i in all_serv %}
 
-            <div style=" position: relative; width: 660px; height: 128px; background-color: white; border-radius: 15px; margin-top: 20px">
+            <div style=" position: relative; width: 800px; height: 128px; background-color: white; border-radius: 15px; margin-top: 20px">
                 <div style="position: absolute; top: 15px; left: 15px; width: 55px; height: 55px; border-radius: 10px; background-color: #e9eef7;"></div>
                 <div style=" position: relative; width: 500px; height: 50px; margin-left: 80px; background-color: white; margin-top: 20px; padding-top: 35px">
-                    <h6 style="text-align: left">{{i.name_serv}}</h6>
+                    <h6 style="text-align: left">{{i.name}}</h6>
                 </div>
-                <h6 style=" position: absolute; top: 90px;left: 10px; font-weight: normal; color: dimgrey">{{i.price}} RUB - {{i.time}}</h6>
-                <a class="btn btn-outline-primary" href="/masters/{{ i.level_mas }}/{{ i.id }}/{{ today }}" role="button" style=" margin-left: 535px; margin-top: 20px; width: 110px; border-radius: 15px">Выбрать</a>
+                <h6 style=" position: absolute; top: 90px;left: 10px; font-weight: normal; color: dimgrey">{{i.price}} RUB - {{i.duration}}</h6>
+                <a class="btn btn-outline-primary" href="/masters/{{ i.master_level_id }}/{{ i.id }}/{{ today }}" role="button" style=" margin-left: 675px; margin-top: 20px; width: 110px; border-radius: 15px">Выбрать</a>
             </div>
          {% endfor %}
     </div>

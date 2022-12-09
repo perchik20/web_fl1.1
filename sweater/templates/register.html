@@ -5,42 +5,45 @@ Register
 {% endblock %}
 
 {% block body %}
-<h1>Register page</h1>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
+<h1 style="text-align: center; margin-top: 100px">Login page</h1>
 
-<form method="POST">
-    <table>
-        <tr>
-            <td><input type="text" name="name" placeholder="Имя"></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="surname" placeholder="Фамилия"></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="second_name" placeholder="Отчество"></td>
-        </tr>
-        <tr>
-            <td><input type="text" name="number" placeholder="Номер"></td>
-        </tr>
-        <tr>
-            <td><input type="password" name="password" placeholder="Пароль"></td>
-        </tr>
-        <tr>
-            <td><input type="password" name="password2" placeholder="Повтор пароля"></td>
-        </tr>
-        <tr>
-            <td><a href="{{ url_for('login_page') }}">logIn</a></td>
-            <td ><input type="submit" value="Register"></td>
-        </tr>
-    </table>
+
+<form method="POST" class="container" style="margin-top: 50px">
+
+  <div class="mb-3">
+    <label for="exampleInputName1" class="form-label"> Имя </label>
+    <input type="text" name="name" class="form-control" id="exampleInputName1" aria-describedby="emailHelp">
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputSurename1" class="form-label"> Фамилия </label>
+    <input type="text" name="surname" class="form-control" id="exampleInputSurename1" aria-describedby="emailHelp">
+  </div>
+
+  <div class="mb-3">
+      <label for="exampleInputSecondname1" class="form-label"> Отчество </label>
+    <input type="text" name="second_name" class="form-control" id="exampleInputSecondname1" aria-describedby="emailHelp">
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputNumber1" class="form-label"> Номер телефона </label>
+    <input type="text" name="number" class="form-control" id="exampleInputNumber1" aria-describedby="emailHelp">
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputPassword1" class="form-label"> Пароль </label>
+    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+  </div>
+
+
+  <div class="mb-3">
+    <label for="exampleInputPassword2" class="form-label"> Повтор Пароля </label>
+    <input type="text" name="password2" class="form-control" id="exampleInputPassword2" aria-describedby="emailHelp">
+  </div>
+
+  <input type="submit" class="btn btn-primary" value="Регистрация">
+
 </form>
+
 {% endblock %}

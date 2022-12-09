@@ -11,15 +11,16 @@ class User(db.Model, UserMixin):
     number = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String, nullable=False, unique=True)
     levelmas = db.Column(db.String)
+    photo = db.Column(db.String)
 
 
-class Service(db.Model):
+class Appointments(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     serv = db.Column(db.String(512))
     dat = db.Column(db.Date)
     time = db.Column(db.Time)
-    id_user = db.Column(db.Integer, nullable=False)
-    id_master = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    master_id = db.Column(db.Integer, db.ForeignKey('user.levelmas'), nullable=False)
 
 
 class AccessRights(db.Model):
@@ -27,30 +28,29 @@ class AccessRights(db.Model):
     Access = db.Column(db.String, unique=True)
 
 
-class IdAccess(db.Model):
+class UserRoles(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    idUser = db.Column(db.Integer)
-    idAccess = db.Column(db.Integer)
-
-
-class AllServ(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    that = db.Column(db.String)
-    name_serv = db.Column(db.String, unique=True)
-    price = db.Column(db.Integer)
-    time = db.Column(db.Time)
-    level_mas = db.Column(db.Integer)
-
-
-class Reviews (db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    review = db.Column(db.Text)
-
+    user_id = db.Column(db.Integer)
+    role_id = db.Column(db.Integer)
 
 class LevelMaster(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     level = db.Column(db.Integer)
+
+class Services(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String)
+    name = db.Column(db.String)
+    price = db.Column(db.Integer)
+    duration = db.Column(db.Time)
+    master_level_id = db.Column(db.Integer, db.ForeignKey('level_master.id'), nullable=False)
+
+
+class Reviews (db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_name = db.Column(db.Integer, db.ForeignKey('user.name'), nullable=False)
+    text = db.Column(db.Text)
 
 
 @manager.user_loader
