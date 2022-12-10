@@ -30,7 +30,7 @@
 
     {% for i in masters %}
 
-            <a href="/new_order/masters/{{ i.levelmas }}/{{ i.id }}" class="btn" style=" position: relative; width: 700px; height: 80px; margin-left: 320px; background-color: white; border-radius: 15px; margin-top: 10px">
+            <a href="/new_order/masters/{{ i.master_level_id }}/{{ i.id }}" class="btn" style=" position: relative; width: 700px; height: 80px; margin-left: 320px; background-color: white; border-radius: 15px; margin-top: 10px">
                 <img src="../../static/img/{{ i.photo }}" alt="non" style="position: absolute; top: 10px; left: 10px; width: 60px; height: 60px; border-radius: 50px;"/>
                 <h7 style="position: absolute; left: 85px; top: 20px; font-weight: bold">{{i.name}}</h7>
                 <h8 style="position: absolute; left: 83px; top: 43px">Мастер</h8>

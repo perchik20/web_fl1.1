@@ -5,7 +5,7 @@ from calendar import monthrange
 from datetime import datetime, date
 
 from sweater import db, app
-from sweater.models import User, Appointments, UserRoles, Services
+from sweater.models import Users, Appointments, UserRoles, Services
 
 
 @app.route("/", methods=['POST', 'GET'])
@@ -14,7 +14,7 @@ def index():
     idaccess = UserRoles.query.filter_by(role_id=2).all()
     masters = []
     for i in idaccess:
-        masters.append(User.query.filter_by(id=i.user_id).first())
+        masters.append(Users.query.filter_by(id=i.user_id).first())
     count = len(masters)
 
     all_serv = Services.query.all()
@@ -59,7 +59,7 @@ def choose_master():
     idaccess = UserRoles.query.filter_by(role_id=2).all()
 
     for i in idaccess:
-        z = User.query.filter_by(id=i.user_id).first()
+        z = Users.query.filter_by(id=i.user_id).first()
         masters.append(z)
 
     return render_template("Mas/choose_master.html", masters=masters)
@@ -87,13 +87,13 @@ def choose_datetime1(id, today, level, mas_id, user_id):
 
     if request.method == 'POST':
 
-        masters = User.query.filter_by(levelmas=level).all()
+        masters = Users.query.filter_by(levelmas=level).all()
         serv = Services.query.filter_by(id=id).first()
 
         All_time = dict()
 
         for el in masters:
-            set_time = Appointments.query.filter_by(dat=date1, master_id=el.id).all()
+            set_time = Appointments.query.filter_by(date=date1, master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -130,7 +130,7 @@ def choose_datetime1(id, today, level, mas_id, user_id):
                                )
     else:
 
-        masters = User.query.filter_by(levelmas=level).all()
+        masters = Users.query.filter_by(master_level_id=level).all()
         serv = Services.query.filter_by(id=id).first()
 
         dt = datetime.strptime(today, '%Y-%m-%d')
@@ -138,7 +138,7 @@ def choose_datetime1(id, today, level, mas_id, user_id):
         All_time = dict()
 
         for el in masters:
-            set_time = Appointments.query.filter_by(dat=dt.date(), master_id=el.id).all()
+            set_time = Appointments.query.filter_by(date=dt.date(), master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -200,7 +200,7 @@ def choose_datetime(id, today, level):
 
     if request.method == 'POST':
 
-        masters = User.query.filter_by(levelmas=level).all()
+        masters = Users.query.filter_by(levelmas=level).all()
         serv = Services.query.filter_by(id=id).first()
 
         # dt = datetime.strptime(today, '%Y-%m-%d')
@@ -208,7 +208,7 @@ def choose_datetime(id, today, level):
         All_time = dict()
 
         for el in masters:
-            set_time = Appointments.query.filter_by(dat=date1, master_id=el.id).all()
+            set_time = Appointments.query.filter_by(date=date1, master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -246,7 +246,7 @@ def choose_datetime(id, today, level):
                                month_name=month_name1
                                )
     else:
-        masters = User.query.filter_by(levelmas=level).all()
+        masters = Users.query.filter_by(master_level_id=level).all()
         serv = Services.query.filter_by(id=id).first()
 
         dt = datetime.strptime(today, '%Y-%m-%d')
@@ -255,7 +255,7 @@ def choose_datetime(id, today, level):
 
 
         for el in masters:
-            set_time = Appointments.query.filter_by(dat=dt.date(), master_id=el.id).all()
+            set_time = Appointments.query.filter_by(date=dt.date(), master_id=el.id).all()
             time1 = []
             time2 = []
             for i in set_time:
@@ -310,7 +310,7 @@ def new_signup(id, today, time, user, master):
     print(tm.time())
     print(type(tm))
 
-    new_signup = Appointments(serv=id, dat=dt, time=tm.time(), user_id=user, master_id=master)
+    new_signup = Appointments(service_id=id, date=dt, time=tm.time(), user_id=user, master_id=master)
 
     db.session.add(new_signup)
     db.session.commit()
@@ -329,7 +329,7 @@ def list_of_servs(id):
     for i in servs:
         mass=[]
         mass.append(i.serv)
-        mass.append(i.dat)
+        mass.append(i.date)
         mass.append(i.time)
         mass.append(i.user_id)
         mass1.append(mass)
@@ -341,7 +341,7 @@ def list_of_servs(id):
                 serv=Services.query.filter_by(id=int(i[z])).first()
                 i[z] = serv.name
             if z == 3:
-                user = User.query.filter_by(id=i[z]).first()
+                user = Users.query.filter_by(id=i[z]).first()
                 name = str(user.name) + ' ' + str(user.number)
                 i[z] = name
             z+=1
@@ -359,7 +359,7 @@ def login_page():
     password = request.form.get('password')
 
     if number and password:
-        user = User.query.filter_by(number=number).first()
+        user = Users.query.filter_by(number=number).first()
         id_us = user.id
         access = UserRoles.query.filter_by(user_id=id_us)
 
@@ -421,12 +421,12 @@ def register():
             flash('Please, check your password')
         else:
             psw = generate_password_hash(password)
-            new_user = User(name=name, surname=surname, second_name=second_name, number=number, password=psw)
+            new_user = Users(name=name, surname=surname, second_name=second_name, number=number, password=psw)
 
             db.session.add(new_user)
             db.session.commit()
 
-            user = User.query.filter_by(number=number).first()
+            user = Users.query.filter_by(number=number).first()
 
             new_access = UserRoles(user_id=user.id, role_id=1)
 
